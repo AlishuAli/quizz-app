@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 120px;
+        flex-direction: column;
+       }
+       #quiz-container{
+        height: 350px;
+        width: 350px;
+        background-color: rgb(164, 164, 240);
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border-radius: 5px;
+        cursor: pointer;
+      
+        
+       }
+     
+       .question-container{
+   
+       
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 5px;
+
+       }
+       
+       .question-container .question{
+        height: 40px;
+        width: 250px;
+        /* background-color: aqua; */
+        margin: 30px;
+        text-align: center;
+        font-size: 18px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       }
+       .options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 130px;
+        width: 200px;
+        /* background-color: rgb(20, 163, 163); */
+        
+       }
+       .options .option{
+        height: 30px;
+        width: 180px;
+        background-color: rgb(233, 209, 181);
+        margin: 3px;
+        text-align: center;
+        border-radius: 10px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       }
+       #timer{
+        display: flex;
+        justify-content: left;
+        align-items: self-start;
+       }
+      
+        
+
+    </style>
+</head>
+<body>
+    
+    <h1>Quizz app</h1>
+    <div id="quiz-container">
+      
+    </div>
+    <div id="timer">50</div>
+    <span id="score">
+    
+    </span>
+    
+    <script> const quiz = [
+        {
+            question: "MY nick name?",
+            options: ["Alishu", "Aleeshy", "Alishba", "Ishu"],
+            answer: "Alishu"
+        },
+        {
+            question: "What is my favorite animal?",
+            options: ["Cat", "Dog", "Lion", "Rabit"],
+            answer: "Dog"
+        },
+        {
+            question: "What is my favorite type of music or band?",
+            options: ["English", "Punjabi", "Sad", "All"],
+            answer: "All"
+        },
+        {
+            question: "What is my favorite place to visit?",
+            options: ["Gc Lohore", "Turky", "Islamabad", "Food point"],
+            answer: "Gc Lohore"
+        },
+        {
+            question: "What is my favorite color?",
+            options: ["Blue", "Reddish", "Black", "Purple"],
+            answer: "Black"
+        }
+    ];
+
+    let currentIndex = 0;
+    let sum = 0;
+    let counter=50
+
+    function displayQuestion(index) {
+        const quizContainer = document.getElementById('quiz-container');
+        quizContainer.innerHTML = '';
+
+        const questionContainer = document.createElement('div');
+        questionContainer.classList.add('question-container');
+
+        const currentQuestion = quiz[index];
+
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('question');
+        questionElement.innerText = currentQuestion.question;
+        questionContainer.appendChild(questionElement);
+//options dalna
+        const optionsContainer = document.createElement('div');
+        optionsContainer.classList.add('options');
+
+        currentQuestion.options.forEach(option => {
+            const optionElement = document.createElement('div');
+            optionElement.classList.add('option');
+            optionElement.innerText = option;
+            optionElement.onclick = () => handleOptionClick(option, currentQuestion.answer);
+            optionsContainer.appendChild(optionElement);
+        });
+
+        questionContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(questionContainer);
+    }
+
+
+    function handleOptionClick(selectedOption, correctAnswer) {
+        if (selectedOption === correctAnswer) {
+            alert('Correct');
+            sum++;
+        } else {
+            alert('Wrong');
+        }
+
+        currentIndex++;
+        if (currentIndex < quiz.length) {
+            showNextQuestion();
+        } else {
+            alert('Finish');
+            document.getElementById('timer').style.display='none'
+            document.getElementById('score').innerText = 'Score: ' + sum;
+           
+        }
+    }
+    //counter div
+    const counterContainer = document.createElement('div');
+        counterContainer.classList.add('Counter-container');
+        const counterElement = document.createElement('div');
+        counterElement.classList.add('counter');
+        counterElement.innerText = '1gfliulg';
+        counterContainer.appendChild(counterElement);
+
+    function showNextQuestion() {
+        if (currentIndex < quiz.length) {
+            displayQuestion(currentIndex);
+        }
+    }
+    showNextQuestion();
+// timer function
+    let timeLeft = 50; 
+const timerElement = document.getElementById('timer');
+function updateTimer() {
+    if (timeLeft > 0) {
+        timeLeft--;
+        timerElement.textContent = timeLeft; 
+    } else {
+        // document.getElementById('timer').style.display='none'
+        currentIndex = 0;
+                sum = 0;
+                timeLeft = 50;
+                showNextQuestion();
+                alert('Time is up! ');
+                timerElement.textContent = timeLeft;
+                document.getElementById('score').innerText = 'Score: ' + sum;
+       
+    }
+}
+const timerInterval = setInterval(updateTimer, 1000);
+
+
+
+    </script>
+</body>
+</html>
+
+
+
+
+    
+
+
+ 
